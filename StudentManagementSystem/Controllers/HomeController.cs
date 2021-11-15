@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using StudentManagementSystem.Models;
+using StudentManagementSystem.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace StudentManagementSystem.Controllers
 {
