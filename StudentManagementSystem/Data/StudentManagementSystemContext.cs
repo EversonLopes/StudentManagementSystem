@@ -15,5 +15,6 @@ namespace StudentManagementSystem.Data
         }
 
         public DbSet<StudentManagementSystem.Models.Role> Role { get; set; }
+        public DbSet<StudentManagementSystem.Models.User> User { get; set; }
     }
 }
