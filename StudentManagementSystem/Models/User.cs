@@ -11,6 +11,7 @@ namespace StudentManagementSystem.Models
         [Key]
         public int User_id { get; set; }
         public Role Role { get; set; }
+        public int RoleID { get; set; }
         public string User_name { get; set; }
         public string User_email { get; set; }
         public DateTime User_dob { get; set; }

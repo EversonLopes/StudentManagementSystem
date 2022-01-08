@@ -23,6 +23,7 @@ namespace StudentManagementSystem.Services
         }
         public void Insert(User obj)
         {
+           // obj.Role = _context.Role.First();
             _context.Add(obj);
             _context.SaveChanges();
         }

@@ -9,7 +9,7 @@ using StudentManagementSystem.Data;
 namespace StudentManagementSystem.Migrations
 {
     [DbContext(typeof(StudentManagementSystemContext))]
-    [Migration("20220107230924_Initial")]
+    [Migration("20220108234539_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace StudentManagementSystem.Migrations
                     b.Property<int>("User_id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("RoleID");
+                    b.Property<int>("RoleID");
 
                     b.Property<string>("User_adress");
 
@@ -59,7 +59,8 @@ namespace StudentManagementSystem.Migrations
                 {
                     b.HasOne("StudentManagementSystem.Models.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleID");
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

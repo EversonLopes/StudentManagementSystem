@@ -36,7 +36,7 @@ namespace StudentManagementSystem.Migrations
                     b.Property<int>("User_id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int?>("RoleID");
+                    b.Property<int>("RoleID");
 
                     b.Property<string>("User_adress");
 
@@ -57,7 +57,8 @@ namespace StudentManagementSystem.Migrations
                 {
                     b.HasOne("StudentManagementSystem.Models.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RoleID");
+                        .HasForeignKey("RoleID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

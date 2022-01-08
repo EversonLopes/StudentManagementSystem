@@ -28,7 +28,7 @@ namespace StudentManagementSystem.Migrations
                 {
                     User_id = table.Column<int>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleID = table.Column<int>(nullable: true),
+                    RoleID = table.Column<int>(nullable: false),
                     User_name = table.Column<string>(nullable: true),
                     User_email = table.Column<string>(nullable: true),
                     User_dob = table.Column<DateTime>(nullable: false),
@@ -42,7 +42,7 @@ namespace StudentManagementSystem.Migrations
                         column: x => x.RoleID,
                         principalTable: "Role",
                         principalColumn: "RoleID",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
