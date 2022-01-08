@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using StudentManagementSystem.Data;
+using StudentManagementSystem.Services;
 
 namespace StudentManagementSystem
 {
@@ -39,6 +40,8 @@ namespace StudentManagementSystem
             services.AddDbContext<StudentManagementSystemContext>(options =>
                     options.UseMySql(Configuration.GetConnectionString("StudentManagementSystemContext"), builder =>
                         builder.MigrationsAssembly("StudentManagementSystem")));
+
+            services.AddScoped<UserService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
