@@ -23,8 +23,17 @@ namespace StudentManagementSystem.Services
         }
         public void Insert(User obj)
         {
-           // obj.Role = _context.Role.First();
+            // obj.Role = _context.Role.First();
             _context.Add(obj);
+            _context.SaveChanges();
+        }
+        public User FindByID(int id)
+        {
+            return _context.User.FirstOrDefault(obj => obj.User_id == id);
+        }
+        public void Remove(int id) {
+            var obj = _context.User.Find(id);
+            _context.User.Remove(obj);
             _context.SaveChanges();
         }
     }

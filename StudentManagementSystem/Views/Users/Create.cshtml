@@ -1,4 +1,4 @@
-﻿@model StudentManagementSystem.Models.User;
+﻿@model StudentManagementSystem.Models.ViewModels.UserFormViewModel
 @{
     ViewData["Title"] = "Create";
 }
@@ -9,26 +9,34 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
+            <!-- <div class="form-group">
+                <label asp-for="User.RoleID" class="control-label"></label>
+                <input asp-for="User.RoleID" class="form-control" />
+            </div>-->
             <div class="form-group">
-                <label asp-for="RoleID" class="control-label"></label>
-                <input asp-for="RoleID" class="form-control" />
+                <label asp-for="User.User_name" class="control-label"></label>
+                <input asp-for="User.User_name" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="User_name" class="control-label"></label>
-                <input asp-for="User_name" class="form-control" />
+                <label asp-for="User.User_email" class="control-label"></label>
+                <input asp-for="User.User_email" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="User_email" class="control-label"></label>
-                <input asp-for="User_email" class="form-control" />
+                <label asp-for="User.User_dob" class="control-label"></label>
+                <input asp-for="User.User_dob" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="User_dob" class="control-label"></label>
-                <input asp-for="User_dob" class="form-control" />
+                <label asp-for="User.User_adress" class="control-label"></label>
+                <input asp-for="User.User_adress" class="form-control" />
             </div>
             <div class="form-group">
-                <label asp-for="User_adress" class="control-label"></label>
-                <input asp-for="User_adress" class="form-control" />
+                <label asp-for="User.RoleID" class="control-label"></label>
+                <select asp-for="User.RoleID" asp-items="@(new SelectList(Model.Roles,"RoleID","Role_Tittle"))" class="form-control"></select>
             </div>
+
+            
+
+
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
 
