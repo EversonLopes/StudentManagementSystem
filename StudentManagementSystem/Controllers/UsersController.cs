@@ -61,5 +61,18 @@ namespace StudentManagementSystem.Controllers
             _userService.Remove(id);
             return RedirectToAction(nameof(Index));
         }
+        public IActionResult Details(int? id) {
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var obj = _userService.FindByID(id.Value);
+            if (obj == null)
+            {
+                return NotFound();
+            }
+            return View(obj);
+        }
     }
 }

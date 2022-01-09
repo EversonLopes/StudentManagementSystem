@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagementSystem.Services
 {
@@ -29,7 +30,7 @@ namespace StudentManagementSystem.Services
         }
         public User FindByID(int id)
         {
-            return _context.User.FirstOrDefault(obj => obj.User_id == id);
+            return _context.User.Include(obj=>obj.Role).FirstOrDefault(obj => obj.User_id == id);
         }
         public void Remove(int id) {
             var obj = _context.User.Find(id);
