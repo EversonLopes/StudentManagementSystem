@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using StudentManagementSystem.Services.Exceptions;
 
 namespace StudentManagementSystem.Services
 {
@@ -30,12 +31,32 @@ namespace StudentManagementSystem.Services
         }
         public User FindByID(int id)
         {
-            return _context.User.Include(obj=>obj.Role).FirstOrDefault(obj => obj.User_id == id);
+            return _context.User.Include(obj => obj.Role).FirstOrDefault(obj => obj.User_id == id);
         }
-        public void Remove(int id) {
+        public void Remove(int id)
+        {
             var obj = _context.User.Find(id);
             _context.User.Remove(obj);
             _context.SaveChanges();
         }
+
+        public void Update(User obj)
+        {
+            if (!_context.User.Any(x => x.User_id == obj.User_id))
+            {
+                throw new NotFoundException("Id Not Found");
+            }
+            try
+            {
+                _context.Update(obj);
+                _context.SaveChanges();
+            }
+
+            catch (DbUpdateConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+        }
+        
     }
 }
