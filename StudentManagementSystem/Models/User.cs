@@ -9,11 +9,18 @@ namespace StudentManagementSystem.Models
     public class User
     {
         [Key]
+        [Display(Name="User ID")]
         public int User_id { get; set; }
         public Role Role { get; set; }
         public int RoleID { get; set; }
+        [Display(Name = "User Name")]
         public string User_name { get; set; }
+        [DataType(DataType.EmailAddress)]
+        [Display(Name = "User Email")]
         public string User_email { get; set; }
+        [Display(Name = "Date of Birth")]
+        [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
+        [DataType(DataType.Date)]
         public DateTime User_dob { get; set; }
         public string User_adress { get; set; }
 
