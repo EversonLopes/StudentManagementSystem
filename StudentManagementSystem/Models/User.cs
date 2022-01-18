@@ -10,18 +10,32 @@ namespace StudentManagementSystem.Models
     {
         [Key]
         [Display(Name="User ID")]
+        
         public int User_id { get; set; }
+        
         public Role Role { get; set; }
+      
+        [Required(ErrorMessage = "{0} Required")]
         public int RoleID { get; set; }
-        [Display(Name = "User Name")]
+      
+        [StringLength(60, MinimumLength = 3, ErrorMessage = "{0} size should be between {2} and {1}")]
+        [Required(ErrorMessage = "{0} Required")]
+        [Display(Name = "User Name")]     
         public string User_name { get; set; }
+
+        [Required(ErrorMessage = "{0} Required")]
         [DataType(DataType.EmailAddress)]
         [Display(Name = "User Email")]
         public string User_email { get; set; }
+
+        [Required(ErrorMessage = "{0} Required")]
         [Display(Name = "Date of Birth")]
         [DisplayFormat(DataFormatString ="{0:dd/MM/yyyy}")]
         [DataType(DataType.Date)]
         public DateTime User_dob { get; set; }
+
+        [Required(ErrorMessage = "{0} Required")]
+        [Display(Name = "Adress")]
         public string User_adress { get; set; }
 
         public User()
