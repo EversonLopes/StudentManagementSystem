@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using StudentManagementSystem.Data;
 using StudentManagementSystem.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace StudentManagementSystem.Services
 {
@@ -16,9 +17,9 @@ namespace StudentManagementSystem.Services
         {
             _context = context;
         }
-        public List<Role> FindAll()
+        public async Task<List<Role>> FindAllAsync()
         {
-            return _context.Role.OrderBy(x => x.Role_Tittle).ToList();
+            return await _context.Role.OrderBy(x => x.Role_Tittle).ToListAsync();
         }
     }
 }

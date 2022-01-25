@@ -19,37 +19,38 @@ namespace StudentManagementSystem.Services
             _context = context;
         }
 
-        public List<User> FindAll()
+        public async Task<List<User>> FindAllAsync()
         {
-            return _context.User.ToList();
+            return await  _context.User.ToListAsync();
         }
-        public void Insert(User obj)
+        public async Task InsertAsync(User obj)
         {
             // obj.Role = _context.Role.First();
             _context.Add(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public User FindByID(int id)
+        public async Task <User> FindByIDAsync(int id)
         {
-            return _context.User.Include(obj => obj.Role).FirstOrDefault(obj => obj.User_id == id);
+            return await _context.User.Include(obj => obj.Role).FirstOrDefaultAsync(obj => obj.User_id == id);
         }
-        public void Remove(int id)
+        public async Task RemoveAsync(int id)
         {
-            var obj = _context.User.Find(id);
+            var obj = await _context.User.FindAsync(id);
             _context.User.Remove(obj);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Update(User obj)
+        public async Task UpdateAsync(User obj)
         {
-            if (!_context.User.Any(x => x.User_id == obj.User_id))
+            bool hasAny = await _context.User.AnyAsync(x => x.User_id == obj.User_id);
+            if (!hasAny)
             {
                 throw new NotFoundException("Id Not Found");
             }
             try
             {
                 _context.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             catch (DbUpdateConcurrencyException e)

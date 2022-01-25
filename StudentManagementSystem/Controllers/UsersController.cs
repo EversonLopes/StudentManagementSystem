@@ -22,33 +22,40 @@ namespace StudentManagementSystem.Controllers
             _userService = userService;
             _roleService = roleService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var list = _userService.FindAll();
+            var list = await _userService.FindAllAsync();
             return View(list);
         }
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var roles = _roleService.FindAll();
+            var roles = await _roleService.FindAllAsync();
             var viewModel = new UserFormViewModel { Roles = roles };
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(User user)
+        public async Task<IActionResult> Create(User user)
         {
-            _userService.Insert(user);
+            if (!ModelState.IsValid)
+            {
+                var roles = await _roleService.FindAllAsync();
+                var viewModel = new UserFormViewModel { User = user, Roles = roles };
+                return View(viewModel);
+
+            }
+            await _userService.InsertAsync(user);
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _userService.FindByID(id.Value);
+            var obj = await _userService.FindByIDAsync (id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
@@ -58,45 +65,52 @@ namespace StudentManagementSystem.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            _userService.Remove(id);
+            await _userService.RemoveAsync(id);
             return RedirectToAction(nameof(Index));
         }
-        public IActionResult Details(int? id)
+        public async Task<IActionResult> Details(int? id)
         {
 
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _userService.FindByID(id.Value);
+            var obj = await _userService.FindByIDAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
             return View(obj);
         }
-        public IActionResult Edit(int? id)
+        public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not provided" });
             }
-            var obj = _userService.FindByID(id.Value);
+            var obj = await _userService.FindByIDAsync(id.Value);
             if (obj == null)
             {
                 return RedirectToAction(nameof(Error), new { message = "Id not found" });
             }
-            List<Role> roles = _roleService.FindAll();
+            List<Role> roles = await _roleService.FindAllAsync();
             UserFormViewModel viewModel = new UserFormViewModel { User = obj, Roles = roles };
             return View(viewModel);
 
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, User user)
+        public async Task<IActionResult> Edit(int id, User user)
         {
+            if (!ModelState.IsValid)
+            {
+                var roles = await _roleService.FindAllAsync();
+                var viewModel = new UserFormViewModel { User=user, Roles = roles };
+                return View(viewModel);
+                
+            }
             if (id != user.User_id)
             {
                 return BadRequest();
@@ -104,7 +118,7 @@ namespace StudentManagementSystem.Controllers
 
             try
             {
-                _userService.Update(user);
+                await _userService.UpdateAsync(user);
                 return RedirectToAction(nameof(Index));
             }
             catch (ApplicationException e)
